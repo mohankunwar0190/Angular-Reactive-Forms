@@ -1,0 +1,29 @@
+.wrapper {
+    min-height: 100%;
+    display: flex;
+}
+.tabs-backdrop {
+    border-radius: 10px;
+    margin: auto;
+}
+.form-backdrop {
+    background: rgb(48, 41, 90);
+    border-radius: 10px;
+    margin: auto;
+    padding: 30px 15px 15px 15px;
+    width: 600px;
+}
+.input-group {
+    width: 100%;
+}
+.errors {
+    color: rgb(165, 9, 9);
+}
+.form-title-label {
+    color: cyan;
+}
+.form-label {
+    color: #89c022;
+    margin-right: 20px;
+    margin-left: 10px;
+}

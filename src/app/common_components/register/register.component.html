@@ -1,0 +1,204 @@
+<div class="wrapper">
+  <div class="tabs-backdrop">
+    <mat-tab-group>
+      <mat-tab label="Students">
+        <div class="form-backdrop">
+
+          <div class="errors" *ngIf="showErrors">
+            <span *ngIf="studentRegisterForm.controls.snumber.invalid">Student No error, add S as well; eg. S123456
+              <br />
+            </span>
+            <span *ngIf="studentRegisterForm.controls.ssn.invalid">SSN error, add dashes as well; eg. 123-45-6789
+              <br />
+            </span>
+            <span *ngIf="studentRegisterForm.controls.level.invalid">Level Required
+              <br />
+            </span>
+            <span *ngIf="studentRegisterForm.controls.firstname.invalid">First Name Required
+              <br />
+            </span>
+            <span *ngIf="studentRegisterForm.controls.lastname.invalid">Last Name Required
+              <br />
+            </span>
+            <span *ngIf="studentRegisterForm.controls.address.controls.line1.invalid ">Address Line 1 Required
+              <br />
+            </span>
+            <span *ngIf="studentRegisterForm.controls.address.controls.city.invalid ">City Required
+              <br />
+            </span>
+            <span *ngIf="studentRegisterForm.controls.address.controls.state.invalid ">State Required
+              <br />
+            </span>
+            <span *ngIf="studentRegisterForm.controls.address.controls.zipcode.invalid ">Zipcode Required
+              <br />
+            </span>
+          </div>
+
+          <form [formGroup]="studentRegisterForm" (ngSubmit)="register(studentRegisterForm)" novalidate>
+            <h4 class="form-title-label">Basic Information</h4>
+            <div class="form-group">
+              <div class="input-group">
+                <input [ngClass]="{'alert-danger': studentRegisterForm.controls.snumber.invalid && studentRegisterForm.controls.snumber.touched}"
+                  class="form-control input-md" type="text" formControlName="snumber" placeholder="Student ID Number (required)"
+                />
+                <span class="input-group-btn"></span>
+                <input [ngClass]="{'alert-danger': studentRegisterForm.controls.ssn.invalid && studentRegisterForm.controls.ssn.touched}"
+                  class="form-control input-md" type="text" formControlName="ssn" placeholder="XXX-XX-XXXX (required)" />
+                <span class="input-group-btn"></span>
+                <select [ngClass]="{'alert-danger': studentRegisterForm.controls.level.invalid && studentRegisterForm.controls.level.touched }"
+                  class="form-control input-md" formControlName="level">
+                  <option *ngFor="let level of levels" [value]="level" [selected]="level" [disabled]="level==='Level'">{{level}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="input-group">
+                <input class="form-control input-md" [ngClass]="{'alert-danger': studentRegisterForm.controls.firstname.invalid && studentRegisterForm.controls.firstname.touched }"
+                  type="text" formControlName="firstname" placeholder="First Name (required)" />
+                <span class="input-group-btn"></span>
+                <input class="form-control input-md" type="text" formControlName="middlename" placeholder="Middle Name" />
+                <span class="input-group-btn"></span>
+                <input class="form-control input-md" [ngClass]="{'alert-danger': studentRegisterForm.controls.lastname.invalid && studentRegisterForm.controls.lastname.touched }"
+                  type="text" formControlName="lastname" placeholder="Last Name (required)" />
+              </div>
+            </div>
+
+            <h4 class="form-title-label">Login Information</h4>
+            <span class="errors" *ngIf="studentRegisterForm.controls.confirmemail.errors?.mismatch">Email Mismatch</span>
+            <div class="form-group">
+              <div class="input-group">
+                <input class="form-control input-md" [ngClass]="{'alert-danger': studentRegisterForm.controls.email.invalid && studentRegisterForm.controls.email.touched }"
+                  type="text" formControlName="email" placeholder="Email Address (required)" />
+                <span class="input-group-btn"></span>
+                <input class="form-control input-md" [ngClass]="{'alert-danger': studentRegisterForm.controls.confirmemail.invalid && studentRegisterForm.controls.confirmemail.touched }"
+                  type="text" formControlName="confirmemail" placeholder="Confirm Email Address (required)" />
+              </div>
+            </div>
+
+            <span *ngIf="studentRegisterForm.controls.confirmpassword.errors?.mismatch && showErrors">Password Mismatch</span>
+            <div class="form-group">
+              <div class="input-group">
+                <input class="form-control input-md" [ngClass]="{'alert-danger': studentRegisterForm.controls.password.invalid && studentRegisterForm.controls.password.touched }"
+                  type="password" formControlName="password" placeholder="Password (required)" />
+                <span class="input-group-btn"></span>
+                <input class="form-control input-md" [ngClass]="{'alert-danger': studentRegisterForm.controls.confirmpassword.invalid && studentRegisterForm.controls.confirmpassword.touched }"
+                  type="password" formControlName="confirmpassword" placeholder="Confirm Password (required)" />
+              </div>
+            </div>
+
+            <!-- Current Address Details -->
+            <div formGroupName="address">
+              <h4 class="form-title-label">Current Address</h4>
+              <div class="form-group">
+                <input class="form-control" [ngClass]="{'alert-danger': studentRegisterForm.controls.address.controls.line1.invalid && studentRegisterForm.controls.address.controls.line1.touched }"
+                  type="text" formControlName="line1" placeholder="Address Line 1 (required)" />
+              </div>
+
+              <div class="form-group">
+                <input class="form-control" type="text" formControlName="line2" placeholder="Address Line 2" />
+              </div>
+
+              <div class="form-group">
+                <div class="input-group">
+                  <input class="form-control input-md" type="text" formControlName="aptsuite" placeholder="apt/suite" />
+                  <span class="input-group-btn"></span>
+                  <input class="form-control input-md" [ngClass]="{'alert-danger': studentRegisterForm.controls.address.controls.city.invalid && studentRegisterForm.controls.address.controls.city.touched }"
+                    type="text" formControlName="city" placeholder="City" />
+                  <span class="input-group-btn"></span>
+                  <select class="form-control input-md" formControlName="state" [ngClass]="{'alert-danger': studentRegisterForm.controls.address.controls.state.invalid && studentRegisterForm.controls.address.controls.state.touched }">
+                    <option *ngFor="let state of states" [value]="state" [selected]="state" [disabled]="state==='State'">{{state}}</option>
+                  </select>
+                  <span class="input-group-btn"></span>
+                  <input class="form-control input-md" [ngClass]="{'alert-danger': studentRegisterForm.controls.address.controls.zipcode.invalid && studentRegisterForm.controls.address.controls.zipcode.touched }"
+                    type="text" formControlName="zipcode" placeholder="Zipcode" />
+
+                </div>
+              </div>
+            </div>
+
+            <!-- Verify if Current Address is Permanent Address -->
+            <div class="form-group">
+              <label>
+                <h5 class="form-label">Is this your permanent Address?</h5>
+              </label>
+              <input type="radio" formControlName="isaddresspermanent" value="Yes" />
+              <label class="form-label">Yes</label>
+              <input type="radio" formControlName="isaddresspermanent" value="No" />
+              <label class="form-label">No</label>
+            </div>
+
+            <!-- Permanent Address Details -->
+            <div formGroupName="permanentaddress" *ngIf="studentRegisterForm.controls.isaddresspermanent.value === 'No'">
+              <h4 class="form-title-label">Permanent Address</h4>
+              <div class="form-group">
+                <input class="form-control" [ngClass]="{'alert-danger': studentRegisterForm.controls.permanentaddress.controls.line1.invalid && studentRegisterForm.controls.permanentaddress.controls.line1.touched }"
+                  type="text" formControlName="line1" placeholder="Address Line 1 (required)" />
+              </div>
+
+              <div class="form-group">
+                <input class="form-control" type="text" formControlName="line2" placeholder="Address Line 2" />
+              </div>
+
+              <div class="form-group">
+                <div class="input-group">
+                  <input class="form-control input-md" type="text" formControlName="aptsuite" placeholder="apt/suite" />
+                  <span class="input-group-btn"></span>
+                  <input class="form-control input-md" [ngClass]="{'alert-danger': studentRegisterForm.controls.permanentaddress.controls.city.invalid && studentRegisterForm.controls.permanentaddress.controls.city.touched }"
+                    type="text" formControlName="city" placeholder="City" />
+                  <span class="input-group-btn"></span>
+                  <select class="form-control input-md" formControlName="state" [ngClass]="{'alert-danger': studentRegisterForm.controls.permanentaddress.controls.state.invalid && studentRegisterForm.controls.permanentaddress.controls.state.touched }">
+                    <option *ngFor="let state of states" [value]="state" [selected]="state" [disabled]="state==='State'">{{state}}</option>
+                  </select>
+                  <span class="input-group-btn"></span>
+                  <input class="form-control input-md" [ngClass]="{'alert-danger': studentRegisterForm.controls.permanentaddress.controls.zipcode.invalid && studentRegisterForm.controls.permanentaddress.controls.zipcode.touched }"
+                    type="text" formControlName="zipcode" placeholder="Zipcode" />
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <button type="submit" class="form-control btn btn-success">Register</button>
+            </div>
+
+          </form>
+        </div>
+      </mat-tab>
+      <mat-tab label="Teachers">
+        <div class="form-backdrop">
+          <form [formGroup]="teacherRegisterForm" (ngSubmit)="register(teacherRegisterForm)" novalidate>
+            <div class="form-group">
+              <input class="form-control" type="text" formControlName="username" placeholder="Type Your Username" />
+            </div>
+            <div class="form-group">
+              <input class="form-control" type="password" formControlName="password" placeholder="Enter Your Password" />
+            </div>
+            <div class="form-group">
+              <button type="submit" class="form-control btn btn-success">Login</button>
+            </div>
+            <div class="form-group">
+              <button type="button" class="form-control btn btn-primary" routerLink="/register">Register</button>
+            </div>
+          </form>
+        </div>
+      </mat-tab>
+      <mat-tab label="Parents">
+        <div class="form-backdrop">
+          <form [formGroup]="parentRegisterForm" (ngSubmit)="register(parentRegisterForm)" novalidate>
+            <div class="form-group">
+              <input class="form-control" type="text" formControlName="username" placeholder="Type Your Username" />
+            </div>
+            <div class="form-group">
+              <input class="form-control" type="password" formControlName="password" placeholder="Enter Your Password" />
+            </div>
+            <div class="form-group">
+              <button type="submit" class="form-control btn btn-success">Login</button>
+            </div>
+            <div class="form-group">
+              <button type="button" class="form-control btn btn-primary" routerLink="/register">Register</button>
+            </div>
+          </form>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</div>

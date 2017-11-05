@@ -1,0 +1,11 @@
+.wrapper {
+    min-height: 100%;
+    display: flex;
+}
+.form-backdrop {
+    background: rgb(48, 41, 90);
+    border-radius: 10px;
+    margin: auto;
+    padding: 30px 15px 15px 15px;
+    width: 600px;
+}
