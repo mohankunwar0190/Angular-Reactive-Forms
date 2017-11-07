@@ -3,12 +3,11 @@
     display: flex;
 }
 .tabs-backdrop {
-    border-radius: 10px;
-    margin: auto;
+    margin: 30px auto 0 auto;
 }
 .form-backdrop {
     background: rgb(48, 41, 90);
-    border-radius: 10px;
+    border-radius: 0 0 10px 10px;
     margin: auto;
     padding: 30px 15px 15px 15px;
     width: 600px;

@@ -64,7 +64,7 @@
             </div>
 
             <h4 class="form-title-label">Login Information</h4>
-            <span class="errors" *ngIf="studentRegisterForm.controls.confirmemail.errors?.mismatch">Email Mismatch</span>
+            <span class="errors" *ngIf="studentRegisterForm.controls.confirmemail.errors?.mismatch && showErrors">Email Mismatch</span>
             <div class="form-group">
               <div class="input-group">
                 <input class="form-control input-md" [ngClass]="{'alert-danger': studentRegisterForm.controls.email.invalid && studentRegisterForm.controls.email.touched }"

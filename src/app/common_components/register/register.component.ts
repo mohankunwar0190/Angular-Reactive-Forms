@@ -28,7 +28,7 @@ export class RegisterComponent implements OnInit {
     this.initializeTeacherRegisterForm();
     this.initializeParentRegisterForm();
   }
-  
+
   initializeStudentRegisterForm() {
     this.studentRegisterForm = this.formBuilder.group({
       snumber: ['', Validators.compose([
@@ -68,19 +68,34 @@ export class RegisterComponent implements OnInit {
       }),
       isaddresspermanent: ['', Validators.required],
       permanentaddress: this.formBuilder.group({
-        line1: ['', Validators.required],
+        line1: [''],
         line2: '',
         aptsuite: '',
-        city: ['', Validators.required],
-        state: ['', Validators.required],
-        zipcode: ['', Validators.compose([
+        city: [''],
+        state: [''],
+        zipcode: ['']
+      })
+    },
+      {
+        validator: Validation.MatchStudentEmailPassword
+      });
+
+    this.studentRegisterForm.controls.isaddresspermanent.valueChanges.subscribe((value: any) => {
+      if (value === 'No') {
+        this.studentRegisterForm.controls.permanentaddress.enable();
+        this.studentRegisterForm.controls.permanentaddress.get('line1').setValidators([Validators.required]);
+        this.studentRegisterForm.controls.permanentaddress.get('city').setValidators([Validators.required]);
+        this.studentRegisterForm.controls.permanentaddress.get('state').setValidators([Validators.required]);
+        this.studentRegisterForm.controls.permanentaddress.get('zipcode').setValidators([Validators.compose([
           Validators.required,
           Validators.pattern(ZIPCODE_REGEXP)
-        ])]
-      })
-    }, {
-      validator : Validation.MatchStudentEmailPassword
+        ])]);
+      }
+      if (value === 'Yes') {
+        this.studentRegisterForm.controls.permanentaddress.disable();
+      }
     });
+
   }
   initializeTeacherRegisterForm() {
     this.teacherRegisterForm = this.formBuilder.group({
